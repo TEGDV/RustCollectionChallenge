@@ -98,6 +98,8 @@ pub fn employees() {
             Some(Command::Add { dept, name }) => employees.entry(dept).or_default().push(name),
             Some(Command::List(dept)) => match employees.get(&dept) {
                 Some(names) => {
+                    let mut names = names.clone();
+                    names.sort();
                     for name in names {
                         println!("{}: {}", dept, name);
                     }
