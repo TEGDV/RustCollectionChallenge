@@ -1,28 +1,19 @@
-use std::collections::HashMap;
+mod options;
+use std::io;
 
 fn main() {
-    let mut my_list = vec![
-        2.0, 4.0, 6.0, 5.0, 4.1, 4.1, 4.1, 4.1, 4.1, 1.0, 1.0, 1.0, 2.0, 2.0, 4.1, 4.1, 5.0, 6.0,
-        7.0, 8.0, 8.0, 9.0,
-    ];
-    let mean: f64 = my_list.iter().sum();
-    let mean: f64 = mean / 2.0;
-    my_list.sort_by(|a, b| a.partial_cmp(b).unwrap());
-    let median_index: usize = my_list.len() / 2;
-    let mut map = HashMap::new();
-    let mut max_value = 0;
-    let mut max_key = String::new();
-    for float in &my_list {
-        let count = map.entry(float.to_string()).or_insert(0);
-        *count += 1;
-        if *count > max_value {
-            max_value = *count;
-            max_key = format!("{}", float);
-        }
-    }
+    let mut chose = String::new();
 
-    println!(
-        "The mean is {} the median is {}, and the most repetead value is {} with {} times",
-        mean, my_list[median_index], max_key, map[&max_key]
-    );
+    println!("Select an option \n 1 => Vector Sorting \n 2 => Piglatin \n 3 => Employees App \n");
+
+    io::stdin()
+        .read_line(&mut chose)
+        .expect("Failed to read line");
+
+    match chose.as_bytes()[0] {
+        b'1' => options::vectors(),
+        b'2' => options::pig_latin(),
+        b'3' => options::employees(),
+        _ => (),
+    }
 }
